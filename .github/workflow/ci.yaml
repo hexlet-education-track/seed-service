@@ -1,0 +1,23 @@
+name: test_CI
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Установить uv
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Установить зависимости
+        run: uv sync
+      - name: Запустить Ruff
+        run: uv run ruff check .
+      - name: Запустить тесты
+        run: uv run pytest -v
+        env:
+          GREETING: "ci"
+          DATABASE_URL: "postgresql://ci:ci@db:5432/ci"
