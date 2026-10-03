@@ -23,7 +23,7 @@ jobs:
           DATABASE_URL: "postgresql://ci:ci@db:5432/ci"
   publish:
     needs: check
-    if: github.ref = 'ref/heads/main'
+    if: github.ref = 'ref/heads/dev'
     runs-on: ubuntu-latest
     permissions:
       contents: read
