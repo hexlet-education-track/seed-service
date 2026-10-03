@@ -10,5 +10,9 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = []
+dev = [
+    "httpx2>=2.13.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
 
