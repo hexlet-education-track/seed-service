@@ -2,26 +2,28 @@ name: CI
 
 on:
   push:
+  pull_request:
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Установить vu
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+      - name: Установить uv
+        uses: astral-sh/setup-uv@v6
       - name: Установить зависимости
         run: uv sync
-      - name: Проверка линтером
+      - name: Линтер (Ruff)
         run: uv run ruff check .
-      - name: Запуск тестов
+      - name: Тесты (pytest)
         run: uv run pytest
         env:
           GREETING: "ci"
-          DATABASE_URL: "postgresql://ci:ci@db:5432/ci"
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
+
   publish:
     needs: check
-    if: github.ref == "refs/heads/main"
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,9 +44,10 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
+
   release:
     needs: check
-    if: startsWith(github.ref, "refs/tags/v")
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
       contents: read
