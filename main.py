@@ -15,6 +15,8 @@ def read_root():
 def health_check():
     return {"status": "ok"}
 
+# 42
+
 
 @app.get("/db-check")
 def db_check():
