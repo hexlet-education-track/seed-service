@@ -21,3 +21,5 @@ def db_check():
     with psycopg.connect(settings.database_url) as conn:
         conn.execute("SELECT 1")
     return {"status_db": "ok"}
+
+# 42
