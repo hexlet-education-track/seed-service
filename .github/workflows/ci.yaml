@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - feat/ci-cd-2
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+      - name: Uv sync
+        run: uv sync
+      - name: run Ruff
+        run: uv run ruff check .
+      - name: Pytest
+        run: uv run pytest
+
