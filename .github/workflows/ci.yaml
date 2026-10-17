@@ -18,4 +18,6 @@ jobs:
         run: uv run ruff check .
       - name: Pytest
         run: uv run pytest
-
+        env:
+          GREETING: "ci"
+          DATABASE_URL: "postgresql://ci:ci@db:5432/ci"
